@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Empleado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        label, input, textarea, select {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registrar Empleado</h1>
+    <form id="registerForm">
+        <label for="codigoEmpleado">Código Empleado:</label>
+        <input type="text" id="codigoEmpleado" required>
+
+        <label for="responsable">Responsable:</label>
+        <input type="text" id="responsable" required>
+
+        <label for="fechaRequerida">Fecha y Hora Requerida:</label>
+        <input type="datetime-local" id="fechaRequerida" required>
+
+        <label for="desFuncion">Descripción de Funciones:</label>
+        <textarea id="desFuncion" rows="4" required></textarea>
+
+        <label for="desCarreras">Carreras Aceptadas:</label>
+        <input type="text" id="desCarreras" required>
+
+        <label for="vacantes">Número de Vacantes Disponibles:</label>
+        <input type="number" id="vacantes" required>
+
+        <button type="submit">Registrar</button>
+    </form>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const data = {
+                codigoEmpleado: document.getElementById('codigoEmpleado').value,
+                responsable: document.getElementById('responsable').value,
+                fechaRequerida: document.getElementById('fechaRequerida').value,
+                desFuncion: document.getElementById('desFuncion').value,
+                desCarreras: document.getElementById('desCarreras').value,
+                vacantes: document.getElementById('vacantes').value
+            };
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.text();
+            document.getElementById('result').textContent = result;
+        });
+    </script>
+</body>
+</html>
