@@ -19,9 +19,9 @@ app.post('/empleados', async (req, res) => {
             connectString: 'localhost:1521/XE'
         });
 
-        const { nombre, cargo, email } = req.body; // Ajustar según los campos necesarios
-        const query = `INSERT INTO EMPLEADOS (nombre, cargo, email) VALUES (:nombre, :cargo, :email)`;
-        const result = await connection.execute(query, [nombre, cargo, email], { autoCommit: true });
+        const { codEmpleado, nomEmpleado, apellidoEmpleado, fechaNac, fechaIngre, fechaEgreso, correo } = req.body;
+        const query = `INSERT INTO EMPLEADO (codEmpleado, nomEmpleado, apellidoEmpleado, fechaNac, fechaIngre, fechaEgreso, correo) VALUES (:codEmpleado, :nomEmpleado, :apellidoEmpleado, :fechaNac, :fechaIngre, :fechaEgreso, :correo)`;
+        const result = await connection.execute(query, [codEmpleado, nomEmpleado, apellidoEmpleado, fechaNac, fechaIngre, fechaEgreso, correo], { autoCommit: true });
 
         res.status(200).json({ message: 'Empleado registrado exitosamente' });
     } catch (err) {
@@ -37,6 +37,7 @@ app.post('/empleados', async (req, res) => {
         }
     }
 });
+
 
 app.post('/requerimientos', async (req, res) => {
     let connection;
